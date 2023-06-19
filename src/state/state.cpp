@@ -11,9 +11,22 @@
  * 
  * @return int 
  */
+const int chess_point[7] = {0, 2, 6, 7, 8, 20, 100};
 int State::evaluate(){
-  // [TODO] design your own evaluation function
-  return 0;
+  int value = 0;
+  for(int i = 0; i < BOARD_H; i++){
+    for(int j = 0; j < BOARD_W; j++){
+      int piece  = board.board[1 - this->player][i][j];
+      if(piece){
+        value += chess_point[piece];
+      }
+      piece = board.board[this->player][i][j];
+      if(piece){
+        value -= chess_point[piece];
+      }
+    }
+  }
+  return value;
 }
 
 
@@ -207,7 +220,7 @@ void State::get_legal_actions(){
       }
     }
   }
-  std::cout << "\n";
+  //std::cout << "\n";
   this->legal_actions = all_actions;
 }
 
